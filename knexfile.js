@@ -1,52 +1,58 @@
-require('dotenv').config();
-const pg = require('pg');
-pg.defaults.ssl = true
+require("dotenv").config();
+const pg = require("pg");
+pg.defaults.ssl = true;
 
 module.exports = {
   development: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './database/migrations',
-      tableName: 'dbmigrations',
+      directory: "./database/migrations",
+      tableName: "dbmigrations",
     },
-    seeds: { directory: './database/seeds' },
+    seeds: { directory: "./database/seeds" },
   },
   testing: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './database/migrations',
-      tableName: 'dbmigrations',
+      directory: "./database/migrations",
+      tableName: "dbmigrations",
     },
-    seeds: { directory: './database/seeds' },
+    seeds: { directory: "./database/seeds" },
   },
   staging: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.RDS_USERNAME,
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      directory: "./database/migrations"
+      directory: "./database/migrations",
     },
     seeds: {
-      directory: "./database/seeds"
-    }
+      directory: "./database/seeds",
+    },
   },
   production: {
     client: "pg",
-    connection: process.env.RDS_HOSTNAME,
+    connection: {
+      port: process.env.RDS_PORT,
+      host: process.env.RDS_HOSTNAME,
+      database: process.env.RDS_DB_NAME,
+      user: process.env.RDS_USERNAME,
+      password: process.env.RDS_PASSWORD,
+    },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      directory: "./database/migrations"
+      directory: "./database/migrations",
     },
     seeds: {
-      directory: "./database/seeds"
-    }
-  }
+      directory: "./database/seeds",
+    },
+  },
 };
